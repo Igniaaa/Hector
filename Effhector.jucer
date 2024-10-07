@@ -12,8 +12,8 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="iCz6oa" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
       <GROUP id="{B2466F43-7A31-2F2A-ECEF-24C0B66A04AF}" name="Data">
-        <FILE id="hxX2h3" name="SourceCode.cpp" compile="1" resource="0" file="Source/Data/SourceCode.cpp"/>
-        <FILE id="O7RRZQ" name="SourceCode.h" compile="0" resource="0" file="Source/Data/SourceCode.h"/>
+        <FILE id="t0D7lQ" name="IIR_Filter.cpp" compile="1" resource="0" file="Source/Data/IIR_Filter.cpp"/>
+        <FILE id="fVzCm7" name="IIR_Filter.h" compile="0" resource="0" file="Source/Data/IIR_Filter.h"/>
       </GROUP>
       <GROUP id="{4A377E02-0EC1-D0DE-629C-11142DBEB52C}" name="UI"/>
     </GROUP>
