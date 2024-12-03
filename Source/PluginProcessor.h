@@ -56,7 +56,7 @@ public:
     //==============================================================================
 
 private:
-    juce::dsp::ProcessorDuplicator<juce::dsp::StateVariableFilter::Filter<float>   >;
+    //juce::dsp::ProcessorDuplicator<juce::dsp::StateVariableFilter::Filter<float>   >;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     void EffhectorAudioProcessor::fillBuffer(juce::AudioBuffer<float>& buffer, int channel);
     void EffhectorAudioProcessor::readBuffer(juce::AudioBuffer<float>& buffer, juce::AudioBuffer<float>& delayBuffer, juce::LinearSmoothedValue<float> gain, int  channel);
