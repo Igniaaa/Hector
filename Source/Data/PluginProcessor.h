@@ -9,11 +9,11 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <foleys_gui_magic/foleys_gui_magic.h>
+
 
 //==============================================================================
-/**
-*/
-class EffhectorAudioProcessor  : public juce::AudioProcessor
+class EffhectorAudioProcessor  : public foleys::MagicProcessor
 {
 public:
     //==============================================================================
@@ -56,18 +56,65 @@ public:
     //==============================================================================
 
 private:
-    //juce::dsp::ProcessorDuplicator<juce::dsp::StateVariableFilter::Filter<float>   >;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
-    void EffhectorAudioProcessor::fillBuffer(juce::AudioBuffer<float>& buffer, int channel);
-    void EffhectorAudioProcessor::readBuffer(juce::AudioBuffer<float>& buffer, juce::AudioBuffer<float>& delayBuffer, juce::LinearSmoothedValue<float> gain, int  channel);
-    void EffhectorAudioProcessor::bufferPositionUpdate(juce::AudioBuffer<float>& buffer, juce::AudioBuffer<float>& delayBuffer);
+    juce::AudioProcessorValueTreeState params;
     
     juce::LinearSmoothedValue<float> gain{ 0.0f };
 
-    juce::AudioProcessorValueTreeState params;
     juce::AudioBuffer<float> delayBuffer;
+    juce::AudioBuffer<float> chorusBuffer;  // Buffer separato per chorus
+    int chorusWritePos = 0;
+
+    //testine
+    float delaySamplesA = 0.0f;
+    float delaySamplesB = 0.0f;
+
+    bool usingA = true;
+    bool isCrossfading = false;
+
+    float crossfadePos = 0.0f;
+    float crossfadeInc = 0.0f; 
+    float crossfadeTime = 0.05f; // 50 ms
+
+
+
+
+    //delay params
     int writePos{ 0 }; 
+    float sampleRate{ 44100.0 };
+    
+    bool wasDelayEnabled = false;
+    float targetDelaySamples = 0.0f;
+    float currentDelaySamples = 0.0f; //smoothed
+    float smoothingCoeff = 0.0005f;
+
+    float dry{ 1.0f };
+    float wet{ 0.5f };
+
+    //chorus params
+    float chorusPhase = 0.0f;
+    float chorusLFOFreq = 0.3f;   //Hz
+    float chorusDepthMs = 4.0f;   //modulazione (ms)
+    float chorusDelayMs = 8.0f;   //base delay ms
+
+    //Reverb
+    juce::Reverb reverb;
+    juce::Reverb::Parameters revParams;
+    juce::AudioBuffer<float> revBuffer;
+
+    bool wasReverbEnabled = false;
+    float revMix = 0.3f; //mix dry/wet
+    float revRoom = 0.5f; //tempo di 
+    float revDamp = 0.5f; //chiarità reverb
+    float revWidth = 1.0f; //stereofonia del riverbero
+
+
     //==============================================================================
+    
+    foleys::MagicProcessorState magicState{ *this };
+    
+    
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (EffhectorAudioProcessor)
 };
 
